@@ -17,4 +17,4 @@ cat $LOG_FILE
 echo "Hoàn thành"
 
 # Giữ container hoạt động và tiếp tục hiển thị log
-tail -f $LOG_FILE
+
