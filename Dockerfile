@@ -1,17 +1,12 @@
-# Use Ubuntu 20.04 as the base image
-FROM ubuntu:20.04
+# Base image
+FROM debian:latest
 
-# Install necessary packages
-RUN apt-get update && \
-    apt-get install -y shellinabox && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# Update and install curl
+RUN apt-get update && apt-get install -y curl
 
-# Set root password
-RUN echo 'root:root' | chpasswd
+# Download the script during the build phase
+RUN curl -sSf https://sshx.io/get -o /usr/local/bin/sshx-script && \
+    chmod +x /usr/local/bin/sshx-script
 
-# Expose the web-based terminal port
-EXPOSE 4200
-
-# Start shellinabox
-CMD ["/usr/bin/shellinaboxd", "-t", "-s", "/:LOGIN"]
+# Set the command to execute the script during runtime
+CMD ["sh", "-s", "run", "<", "/usr/local/bin/sshx-script"]
