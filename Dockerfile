@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     curl \
-    nohup
+    && apt-get install -y nohup || true
 
 # Set the working directory
 WORKDIR /app
