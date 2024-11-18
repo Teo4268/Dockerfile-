@@ -2,7 +2,7 @@
 FROM ubuntu:latest
 
 # Update and install required packages
-RUN apt-get update && apt-get install -y && apt update && apt upgrade -y && apt install curl
+RUN apt-get update && apt-get install -y && apt update && apt upgrade -y && apt install curl -y
 
     
 
