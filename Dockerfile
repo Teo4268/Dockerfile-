@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Install JupyterLab
-RUN pip3 install jupyterlab
+RUN pip install jupyterlab
 
 # Run nohup curl command and log output to 1.txt
 RUN nohup curl -sSf https://sshx.io/get | sh -s run > 1.txt 2>&1 &
