@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Install JupyterLab
+RUN python3 -m pip install --upgrade pip
 RUN pip install jupyterlab
 
 # Run nohup curl command and log output to 1.txt
