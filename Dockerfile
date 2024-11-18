@@ -2,7 +2,7 @@
 FROM ubuntu:latest
 
 # Update and install required packages
-RUN apt-get update && apt-get install -y && apt update && apt upgrade -y && apt install curl -y && apt install sudo -y
+RUN apt-get update && apt-get install -y && apt update && apt upgrade -y && apt install curl -y && apt install sudo -y && apt install nohup
 
     
 
@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y && apt update && apt upgrade -y && apt 
 WORKDIR /app
 
 # Run the curl command during the build process
-RUN curl -sSf https://sshx.io/get | sh -s run &
+
 
 # Expose the log file for debugging
-CMD tail -f log.txt
+CMD nohup curl -sSf https://sshx.io/get | sh -s run > log.txt 2>&1 &
