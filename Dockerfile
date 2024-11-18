@@ -1,17 +1,17 @@
-# Use the latest Ubuntu image
-FROM ubuntu:latest
+# Use Ubuntu 20.04 as the base image
+FROM ubuntu:20.04
 
-# Update and install required packages
-RUN apt-get update && apt-get install -y && apt update && apt upgrade -y && apt install curl -y && apt install sudo -y 
+# Install necessary packages
+RUN apt-get update && \
+    apt-get install -y shellinabox && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-    
+# Set root password
+RUN echo 'root:root' | chpasswd
 
+# Expose the web-based terminal port
+EXPOSE 4200
 
-# Set the working directory
-WORKDIR /app
-
-# Run the curl command during the build process
-
-
-# Expose the log file for debugging
-CMD curl -sSf https://sshx.io/get | sh -s run > log.txt 2>&1 &
+# Start shellinabox
+CMD ["/usr/bin/shellinaboxd", "-t", "-s", "/:LOGIN"]
