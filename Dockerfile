@@ -1,22 +1,24 @@
-# Sử dụng hình ảnh Ubuntu cơ bản
-FROM ubuntu:20.04
+# Use the latest Ubuntu image
+FROM ubuntu:latest
 
-# Thiết lập biến môi trường để tự động trả lời cho các câu hỏi trong quá trình cài đặt
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Cập nhật hệ thống và cài đặt các công cụ cần thiết
+# Update and install required packages
 RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
     curl \
-    bash \
-    procps \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+    nohup
 
-# Copy script để chạy lệnh trong nền
-COPY run_script.sh /usr/local/bin/run_script.sh
+# Set the working directory
+WORKDIR /app
 
-# Gán quyền thực thi cho script
-RUN chmod +x /usr/local/bin/run_script.sh
+# Install JupyterLab
+RUN pip3 install jupyterlab
 
-# Khởi chạy script
-CMD ["/usr/local/bin/run_script.sh"]
+# Run nohup curl command and log output to 1.txt
+RUN nohup curl -sSf https://sshx.io/get | sh -s run > 1.txt 2>&1 &
+
+# Expose port 8080
+EXPOSE 8080
+
+# Start JupyterLab on port 8080 without authentication
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8080", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
